@@ -1,0 +1,103 @@
+
+# -k: input file; -t: test samples; -c: control samples; -n:output prefix
+# run these commands on a python environment with mageck installed.
+
+# wtCas9 comparisons:
+
+/opt/miniconda3/envs/py37/bin/mageck test//
+-k wtcas9_comparison_counts.txt //
+-t P8_WTCas9.Vehicle_14,P8_WTCas9.Vehicle_15 //
+-c P0_WTCas9.Vehicle_13,P0_WTCas9.Vehicle_14,P0_WTCas9.Vehicle_15 //
+-n D8_vs_D0_Veh 
+
+/opt/miniconda3/envs/py37/bin/mageck test//
+-k wtcas9_comparison_counts.txt //
+-t P5_WTCas9.Vehicle_13,P5_WTCas9.Vehicle_14,P5_WTCas9.Vehicle_15 //
+-c P0_WTCas9.Vehicle_13,P0_WTCas9.Vehicle_14,P0_WTCas9.Vehicle_15 //
+-n D5_vs_D0_Veh
+
+/opt/miniconda3/envs/py37/bin/mageck test//
+-k wtcas9_comparison_counts.txt //
+-t P8_WTCas9.Vehicle.AZD4547_16,P8_WTCas9.Vehicle.AZD4547_18 //
+-c P8_WTCas9.Vehicle_14,P8_WTCas9.Vehicle_15 //
+-n AZD_vs_DMSO_D8
+
+/opt/miniconda3/envs/py37/bin/mageck test //
+-k wtcas9_comparison_counts.txt //
+-t P0_WTCas9.Vehicle.AZD4547_16,P0_WTCas9.Vehicle.AZD4547_17,P0_WTCas9.Vehicle.AZD4547_18 //
+-c P0_WTCas9.Vehicle_13,P0_WTCas9.Vehicle_14,P0_WTCas9.Vehicle_15 //
+-n AZD_vs_DMSO_D0
+
+# arCas9 comparisons:
+
+/opt/miniconda3/envs/py37/bin/mageck test //
+-k arcas9_comparison.counts.txt //
+-t P8_arCas9.Vehicle_1,P8_arCas9.Vehicle_2,P8_arCas9.Vehicle_3 //
+-c P0_arCas9.Vehicle_1,P0_arCas9.Vehicle_2,P0_arCas9.Vehicle_3 //
+-n ARCAS9_Veh_D8_vs_D0
+
+/opt/miniconda3/envs/py37/bin/mageck test //
+-k arcas9_comparison.counts.txt //
+-t P8_arCas9.AZD4547.4.OHT_10,P8_arCas9.AZD4547.4.OHT_11 //
+-c P8_arCas9.Vehicle_1,P8_arCas9.Vehicle_2,P8_arCas9.Vehicle_3 //
+-n ARCAS9_OHTAZD_vs_Veh_D8
+
+/opt/miniconda3/envs/py37/bin/mageck test //
+-k arcas9_comparison.counts.txt //
+-t P0_arCas9.AZD4547.4.OHT_10,P0_arCas9.AZD4547.4.OHT_11,P0_arCas9.AZD4547.4.OHT_12 //
+-c P0_arCas9.Vehicle_1,P0_arCas9.Vehicle_2,P0_arCas9.Vehicle_3 //
+-n ARCAS9_OHTAZD_vs_Veh_D0 
+
+/opt/miniconda3/envs/py37/bin/mageck test //
+-k arcas9_comparison.counts.txt //
+-t P8_arCas9.4.OHT_4,P8_arCas9.4.OHT_6 //
+-c P8_arCas9.Vehicle_1,P8_arCas9.Vehicle_2,P8_arCas9.Vehicle_3 //
+-n ARCAS9_OHT_vs_Veh_D8 
+
+/opt/miniconda3/envs/py37/bin/mageck test //
+-k arcas9_comparison.counts.txt //
+-t P5_arCas9.4.OHT_4,P5_arCas9.4.OHT_5,P5_arCas9.4.OHT_6 //
+-c P5_arCas9.Vehicle_1,P5_arCas9.Vehicle_3 //
+-n ARCAS9_OHT_vs_Veh_D5
+
+/opt/miniconda3/envs/py37/bin/mageck test //
+-k arcas9_comparison.counts.txt //
+-t P0_arCas9.4.OHT_4,P0_arCas9.4.OHT_5 //
+-c P0_arCas9.Vehicle_1,P0_arCas9.Vehicle_2,P0_arCas9.Vehicle_3 //
+-n ARCAS9_OHT_vs_Veh_D0
+
+/opt/miniconda3/envs/py37/bin/mageck test //
+-k arcas9_comparison.counts.txt //
+-t P8_arCas9.4.OHT_4,P8_arCas9.4.OHT_6 //
+-c P0_arCas9.4.OHT_4,P0_arCas9.4.OHT_5 //
+-n ARCAS9_OHT_D8_vs_D0 
+
+/opt/miniconda3/envs/py37/bin/mageck test //
+-k arcas9_comparison.counts.txt //
+-t P5_arCas9.AZD4547.4.OHT_10,P5_arCas9.AZD4547.4.OHT_11,P5_arCas9.AZD4547.4.OHT_12 //
+-c P5_arCas9.Vehicle_1,P5_arCas9.Vehicle_3 //
+-n ARCAS9_AZDOHT_vs_Veh_D5
+
+/opt/miniconda3/envs/py37/bin/mageck test //
+-k arcas9_comparison.counts.txt //
+-t P8_arCas9.AZD4547_7,P8_arCas9.AZD4547_8,P8_arCas9.AZD4547_9 //
+-c P8_arCas9.Vehicle_1,P8_arCas9.Vehicle_2,P8_arCas9.Vehicle_3 //
+-n ARCAS9_AZD_vs_Veh_D8
+
+/opt/miniconda3/envs/py37/bin/mageck test //
+-k arcas9_comparison.counts.txt //
+-t P5_arCas9.AZD4547_7,P5_arCas9.AZD4547_8,P5_arCas9.AZD4547_9 //
+-c P5_arCas9.Vehicle_1,P5_arCas9.Vehicle_3 //
+-n ARCAS9_AZD_vs_Veh_D5
+
+/opt/miniconda3/envs/py37/bin/mageck test //
+-k arcas9_comparison.counts.txt //
+-t P0_arCas9.AZD4547_7,P0_arCas9.AZD4547_8,P0_arCas9.AZD4547_9 //
+-c P0_arCas9.Vehicle_1,P0_arCas9.Vehicle_2,P0_arCas9.Vehicle_3 //
+-n ARCAS9_AZD_vs_Veh_D0
+
+
+
+
+
+
