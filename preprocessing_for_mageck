@@ -1,6 +1,5 @@
 # this code generates MAGeCK compatible files for analysis.
 
-
 library(readxl)
 library(tidyverse)
 library(MAGeCKFlute)
@@ -9,20 +8,14 @@ library(ggrepel)
 library(cowplot)
 library(openxlsx)
 
-
 #read library and PoolQ output files
 
-
 sgRNA_library <- read_excel("Epigenome sgRNA library.xls")
-
 scores <- read.delim(file = "~/Desktop/Woappi Fastq/Output files/scores-JD_GPP626_Woappi_20190402.txt")
-
 
 #select relevent columns, merge files, and organize everything
 
-
 lib_small <- sgRNA_library[,c(5,6,22)]
-
 lib_small <- lib_small %>%
   rename( gene = 'Target Gene Symbol',
           target_transcript = 'Target Transcript',
@@ -31,9 +24,7 @@ lib_small <- lib_small %>%
 scores <- merge(scores, lib_small, by = "Construct.Barcode", 
                   all.x = TRUE)
 scores <- scores[,c(1,2,58,59,3:57)]
-
 scores$gene[is.na(scores$gene)] <- "Non-targeting_control"
-
 scores <- scores %>%
   rename( sgRNA = 'Construct.IDs',
                              Gene = 'gene') %>%
@@ -44,14 +35,18 @@ count <- scores %>%
   group_by(gene) %>%
   count()
 
-
 #select and write files for wtCas9 and arCas9 analysis
 
+wtcas9_groups <- scores[,c(60,3,17:22,23,35:40,53:56,58)] %>% rename( sgRNA = 'sgRNA_order')
+samples <- colnames(wtcas9_groups[,c(3:20)]) %>% as.data.frame()
+write_tsv(wtcas9_groups, file = "wtcas9_comparison.counts.txt")
 
 arcas9_groups <- scores[,c(60,3,5:9,11:16,23,25:34,41:44,46:51)] %>% rename( sgRNA = 'sgRNA_order')
-
 samples2 <- colnames(arcas9_groups[,c(3:34)]) %>% as.data.frame()
-
 write_tsv(arcas9_groups, file = "arcas9_comparison.counts.txt")
+
+#exported count sheets are ready to use in MAGeCK analysis.
+# Note: There are some samples with very low total read counts, and while performing mageck comparisons, they are excluded from the analyses.
+
 
 
