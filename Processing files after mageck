@@ -1,0 +1,79 @@
+#collect and combine files after mageck pairwise comparisons are completed
+
+## Collecting all RRA results
+# Define the folder path where your files are located
+folder_path <- "~/Desktop/Woappi Fastq"
+
+# Function to process results in a single df
+process_dataframe <- function(file_path) {
+
+  # Extract the prefix from the file name (remove directory and extension)
+  prefix <- tools::file_path_sans_ext(basename(file_path))
+  
+  # Remove "gene_summary" from the prefix (if it exists)
+  prefix <- gsub(".gene_summary", "", prefix, fixed = TRUE)
+  
+  # Read the file
+  df <- read.delim(file = file_path)
+  
+  # Select columns 1, 8, and 4
+  df <- df[c(1, 8, 4)]
+  
+  # Rename columns with the cleaned prefix
+  colnames(df) <- paste0(prefix, "_", colnames(df))
+  
+  # Return the processed dataframe
+  return(df)
+}
+
+# Find all files in the folder that match the pattern (e.g., end with ".gene_summary.txt")
+file_list <- list.files(path = folder_path, pattern = "\\.gene_summary\\.txt$", full.names = TRUE)
+
+# Process all files and create separate dataframes in the global environment
+for (file_path in file_list) {
+  # Extract the base name without extension and remove "gene_summary"
+  df_name <- tools::file_path_sans_ext(basename(file_path))
+  df_name <- gsub(".gene_summary", "", df_name, fixed = TRUE)
+  
+  # Process the file and assign it to a dataframe with the cleaned name
+  assign(df_name, process_dataframe(file_path))
+}
+
+# Combining all dataframes that was read. 
+
+# Rename the first column to "id" in each dataframe
+for (df_name in ls(pattern = "_vs_")) {
+  df <- get(df_name)
+  colnames(df)[1] <- "id"  # Rename the first column to "id"
+  assign(df_name, df)  # Update the dataframe in the environment
+}
+
+# Get all dataframes into a list
+df_list <- mget(ls(pattern = "_vs_"))
+
+# Combine all dataframes by "id" using full_join
+combined_df <- df_list %>% reduce(full_join, by = "id")
+
+# Check the combined dataframe
+print(head(combined_df))
+
+# Add p_value significance column to the end, <0.05 in at least 1 comparison
+
+# Define the function
+
+add_significance_column <- function(df, p_value_threshold = 0.05) {
+  # Identify columns containing p-values (assuming they contain ".p.value" in their names)
+  p_value_columns <- grep(".p.value", colnames(df), value = TRUE)
+  
+  # Check if any p-value in the row is smaller than the threshold
+  df$significant <- apply(df[p_value_columns], 1, function(row) any(row < p_value_threshold))
+  
+  # Return the modified dataframe
+  return(df)
+}
+
+# Apply the function to your dataframe
+combined_df <- add_significance_column(combined_df)
+
+# Check the result
+print(head(combined_df))
