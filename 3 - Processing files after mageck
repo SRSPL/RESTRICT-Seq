@@ -1,6 +1,7 @@
 #collect and combine files after mageck pairwise comparisons are completed
 
 ## Collecting all RRA results
+
 # Define the folder path where your files are located
 folder_path <- "~/Desktop/Woappi Fastq"
 
@@ -26,11 +27,12 @@ process_dataframe <- function(file_path) {
   return(df)
 }
 
-# Find all files in the folder that match the pattern (e.g., end with ".gene_summary.txt")
+# Find all files in the folder that match the pattern ".gene_summary.txt"
 file_list <- list.files(path = folder_path, pattern = "\\.gene_summary\\.txt$", full.names = TRUE)
 
 # Process all files and create separate dataframes in the global environment
 for (file_path in file_list) {
+
   # Extract the base name without extension and remove "gene_summary"
   df_name <- tools::file_path_sans_ext(basename(file_path))
   df_name <- gsub(".gene_summary", "", df_name, fixed = TRUE)
