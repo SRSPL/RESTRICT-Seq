@@ -10,8 +10,7 @@ scores <- read.delim(file = "~/Desktop/Woappi Fastq/Output files/scores-JD_GPP62
 
 #select relevent columns, merge files, and organize everything
 
-lib_small <- sgRNA_library[,c(5,6,22)]
-lib_small <- lib_small %>%
+lib_small <- sgRNA_library[,c(5,6,22)] %>%
   rename( gene = 'Target Gene Symbol',
           target_transcript = 'Target Transcript',
           Construct.Barcode = 'sgRNA Sequence')
